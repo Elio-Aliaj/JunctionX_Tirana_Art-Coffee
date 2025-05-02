@@ -2,6 +2,7 @@
   "name": "art-caffee",
   "version": "1.0.0",
   "description": "backend server ",
+  "type": "module",
   "scripts": {
     "start": "node index.js"
   },

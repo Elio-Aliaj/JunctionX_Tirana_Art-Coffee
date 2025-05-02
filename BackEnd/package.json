@@ -1,0 +1,14 @@
+{
+  "name": "art-caffee",
+  "version": "1.0.0",
+  "description": "backend server ",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "JunctionX_Tirana_Art-Coffee"
+  },
+  "author": "Elio Aliaj",
+  "license": "ISC"
+}

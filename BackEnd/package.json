@@ -10,5 +10,8 @@
     "url": "JunctionX_Tirana_Art-Coffee"
   },
   "author": "Elio Aliaj",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }

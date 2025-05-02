@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/(main)/gift-cards/page": "app/(main)/gift-cards/page.js",
+  "/(main)/order-confirmation/page": "app/(main)/order-confirmation/page.js",
+  "/(main)/menu/page": "app/(main)/menu/page.js",
+  "/(main)/cart/page": "app/(main)/cart/page.js",
+  "/(main)/account/page": "app/(main)/account/page.js",
+  "/(main)/menu/[productId]/page": "app/(main)/menu/[productId]/page.js",
+  "/(main)/page": "app/(main)/page.js",
+  "/(main)/table-order/[tableId]/confirmation/page": "app/(main)/table-order/[tableId]/confirmation/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/auth/register/page": "app/auth/register/page.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/(main)/loyalty/page": "app/(main)/loyalty/page.js",
+  "/(main)/table-order/[tableId]/page": "app/(main)/table-order/[tableId]/page.js"
+}

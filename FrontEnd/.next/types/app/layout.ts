@@ -1,4 +1,4 @@
-// File: C:\Users\elioa\Desktop\JunctionX  Tirana - Art Coffee\JunctionX_Tirana_Art-Coffee\FrontEnd\app\layout.tsx
+// File: C:\Users\User\OneDrive\Desktop\hackathoni\JunctionX_Tirana_Art-Coffee\FrontEnd\app\layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

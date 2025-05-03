@@ -1,17 +1,26 @@
 {
-  "name": "art-caffee",
+  "name": "node-js-jwt-auth",
   "version": "1.0.0",
-  "description": "backend server ",
+  "description": "Node.js Demo for JWT Authentication",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "JunctionX_Tirana_Art-Coffee"
-  },
-  "author": "Elio Aliaj",
+  "keywords": [
+    "node.js",
+    "jwt",
+    "authentication",
+    "express",
+    "mysql"
+  ],
+  "author": "bezkoder",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.37.7"
   }
 }

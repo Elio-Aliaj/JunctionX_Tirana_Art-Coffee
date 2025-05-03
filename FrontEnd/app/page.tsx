@@ -17,7 +17,7 @@ export default function Home() {
         {/* Hero Section */}
         <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 z-10" />
-          <Image src="/images/hero-coffee.png" alt="Coffee shop" fill className="object-cover" priority />
+          <Image src="/hero1.png" alt="Coffee shop" fill className="object-cover" priority />
           <div className="container relative z-20 px-4 md:px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <div>
@@ -61,7 +61,7 @@ export default function Home() {
                       </div>
                       <div className="flex flex-col space-y-2">
                         <Button asChild>
-                          <Link href="/auth/login">Login</Link>
+                          <Link href="/menu">Login</Link>
                         </Button>
                         <Button asChild variant="outline">
                           <Link href="/auth/register">Create Account</Link>

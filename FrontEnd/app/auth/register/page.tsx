@@ -1,44 +1,51 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Github, Loader2 } from "lucide-react"
-import Image from "next/image"
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Github, Loader2 } from "lucide-react";
+import Image from "next/image";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useToast } from "@/components/ui/use-toast"
-import { Checkbox } from "@/components/ui/checkbox"
-import { useAuth } from "@/components/providers/auth-provider"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useAuth } from "@/components/providers/auth-provider";
 
 export default function RegisterPage() {
-  const router = useRouter()
-  const { toast } = useToast()
-  const { signup } = useAuth()
+  const router = useRouter();
+  const { toast } = useToast();
+  const { signup } = useAuth();
 
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [acceptTerms, setAcceptTerms] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (password !== confirmPassword) {
       toast({
         title: "Passwords don't match",
         description: "Please make sure your passwords match.",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
     if (!acceptTerms) {
@@ -46,70 +53,79 @@ export default function RegisterPage() {
         title: "Terms and conditions",
         description: "Please accept the terms and conditions to continue.",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
-      const success = await signup(name, email, password)
+      const success = await signup(name, email, password);
 
       if (success) {
         toast({
           title: "Account created successfully",
           description: "You are now logged in.",
-        })
-        router.push("/")
+        });
+        router.push("/");
       } else {
         toast({
           title: "Registration failed",
           description: "An account with this email already exists.",
           variant: "destructive",
-        })
+        });
       }
     } catch (error) {
       toast({
         title: "Registration failed",
         description: "An error occurred while creating your account.",
         variant: "destructive",
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleGoogleSignUp = async () => {
-    setIsGoogleLoading(true)
+    setIsGoogleLoading(true);
 
     // Mock Google signup - will be replaced with actual OAuth
     setTimeout(() => {
       toast({
         title: "Feature not implemented",
         description: "Google signup will be implemented by the backend team.",
-      })
-      setIsGoogleLoading(false)
-    }, 1000)
-  }
+      });
+      setIsGoogleLoading(false);
+    }, 1000);
+  };
 
   return (
     <div className="container flex min-h-screen w-screen flex-col items-center justify-center py-8">
-      <Link href="/" className="absolute left-4 top-4 md:left-8 md:top-8 flex items-center">
-        <Image src="logoja1.svg" alt="Art Coffee" width={32} height={32} className="mr-2" />
-        <span className="font-bold text-xl">Art Coffee</span>
+      <Link
+        href="/"
+        className="absolute left-4 top-4 md:left-8 md:top-8 flex items-center"
+      >
+        <Image
+          src="../logooo.png"
+          alt="Maison De Café"
+          width={32}
+          height={32}
+          className="mr-2"
+        />
+        <span className="font-bold text-xl">Maison De Café</span>
       </Link>
 
       <Card className="mx-auto max-w-sm">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
-          <CardDescription>Enter your information to create an account</CardDescription>
+          <CardTitle className="text-2xl font-bold">
+            Create an account
+          </CardTitle>
+          <CardDescription>
+            Enter your information to create an account
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            
-
-            
-
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
@@ -156,7 +172,9 @@ export default function RegisterPage() {
                 <Checkbox
                   id="terms"
                   checked={acceptTerms}
-                  onCheckedChange={(checked) => setAcceptTerms(checked as boolean)}
+                  onCheckedChange={(checked) =>
+                    setAcceptTerms(checked as boolean)
+                  }
                 />
                 <label
                   htmlFor="terms"
@@ -169,7 +187,11 @@ export default function RegisterPage() {
                 </label>
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Create account"}
+                {isLoading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  "Create account"
+                )}
               </Button>
             </form>
           </div>
@@ -184,5 +206,5 @@ export default function RegisterPage() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

@@ -1,22 +1,32 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Coffee, Gift, Home, Menu, ShieldCheck, ShoppingBag, Star, User, X } from "lucide-react"
-import Image from "next/image"
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  Coffee,
+  Gift,
+  Home,
+  Menu,
+  ShieldCheck,
+  ShoppingBag,
+  Star,
+  User,
+  X,
+} from "lucide-react";
+import Image from "next/image";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { useCart } from "@/components/providers/cart-provider"
-import { useAuth } from "@/components/providers/auth-provider"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useCart } from "@/components/providers/cart-provider";
+import { useAuth } from "@/components/providers/auth-provider";
 
 export function MainNav() {
-  const pathname = usePathname()
-  const { items } = useCart()
-  const { user, isAdmin, logout } = useAuth()
-  const [open, setOpen] = useState(false)
+  const pathname = usePathname();
+  const { items } = useCart();
+  const { user, isAdmin, logout } = useAuth();
+  const [open, setOpen] = useState(false);
 
   // Base routes that are always shown
   const baseRoutes = [
@@ -40,11 +50,11 @@ export function MainNav() {
     },
     {
       href: "/gift-cards",
-      label: "Gift Cards",
+      label: "Gift",
       icon: Gift,
       active: pathname === "/gift-cards",
     },
-  ]
+  ];
 
   // Account route - only shown when user is logged in
   const accountRoute = user
@@ -56,7 +66,7 @@ export function MainNav() {
           active: pathname === "/account",
         },
       ]
-    : []
+    : [];
 
   // Admin route - only shown when user is admin
   const adminRoute = isAdmin
@@ -68,23 +78,26 @@ export function MainNav() {
           active: pathname.startsWith("/admin"),
         },
       ]
-    : []
+    : [];
 
   // Combine all applicable routes
-  const allRoutes = [...baseRoutes, ...accountRoute, ...adminRoute]
+  const allRoutes = [...baseRoutes, ...accountRoute, ...adminRoute];
 
   return (
     <>
       {/* Mobile Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-card border-t">
-        <div className="grid h-full grid-cols-5">
+        <div
+          className={`grid h-full ${isAdmin ? "grid-cols-5" : "grid-cols-4"}`}
+          id="test"
+        >
           {allRoutes.slice(0, 5).map((route) => (
             <Link
               key={route.href}
               href={route.href}
               className={cn(
                 "inline-flex flex-col items-center justify-center px-5 hover:bg-muted transition-colors",
-                route.active && "text-primary",
+                route.active && "text-primary"
               )}
             >
               <route.icon className="w-5 h-5" />
@@ -105,13 +118,26 @@ export function MainNav() {
           </SheetTrigger>
           <SheetContent side="left" className="w-[300px] sm:w-[400px]">
             <div className="flex items-center justify-between">
-              <Link href="/" className="flex items-center" onClick={() => setOpen(false)}>
-              <Image src="logoERe1.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+              <Link
+                href="/"
+                className="flex items-center"
+                onClick={() => setOpen(false)}
+              >
+                <Image
+                  src="logoERe1.png"
+                  alt="Maison De Café"
+                  width={32}
+                  height={32}
+                  className="mr-2"
+                />
 
-
-                <span className="font-bold text-xl">Art Coffee</span>
+                <span className="font-bold text-xl">Maison De Café</span>
               </Link>
-              <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setOpen(false)}
+              >
                 <X className="h-5 w-5" />
                 <span className="sr-only">Close</span>
               </Button>
@@ -123,7 +149,7 @@ export function MainNav() {
                   href={route.href}
                   className={cn(
                     "flex items-center gap-2 text-lg font-medium transition-colors hover:text-primary",
-                    route.active ? "text-primary" : "text-muted-foreground",
+                    route.active ? "text-primary" : "text-muted-foreground"
                   )}
                   onClick={() => setOpen(false)}
                 >
@@ -135,11 +161,15 @@ export function MainNav() {
           </SheetContent>
         </Sheet>
         <Link href="/" className="flex items-center">
-          
-        <Image src="logooo.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+          <Image
+            src="logooo.png"
+            alt="Maison De Café"
+            width={32}
+            height={32}
+            className="mr-2"
+          />
 
-
-          <span className="font-bold text-xl">Art Coffee</span>
+          <span className="font-bold text-xl">Maison De Café</span>
         </Link>
         <nav className="ml-auto flex items-center space-x-6">
           {allRoutes.map((route) => (
@@ -148,7 +178,7 @@ export function MainNav() {
               href={route.href}
               className={cn(
                 "text-sm font-medium transition-colors hover:text-primary flex items-center gap-1",
-                route.active ? "text-primary" : "text-muted-foreground",
+                route.active ? "text-primary" : "text-muted-foreground"
               )}
             >
               <route.icon className="h-4 w-4" />
@@ -175,5 +205,5 @@ export function MainNav() {
         </nav>
       </div>
     </>
-  )
+  );
 }

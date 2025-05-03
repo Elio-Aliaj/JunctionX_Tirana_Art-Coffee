@@ -238,8 +238,8 @@ export const mockOrders: Order[] = [
     createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(), // 5 minutes ago
     customer: {
       id: "user-1",
-      name: "John Doe",
-      email: "john@example.com",
+      name: "Elio Aliaj",
+      email: "elioaliaj0@gmail.com",
     },
   },
   {
@@ -308,8 +308,8 @@ export const mockOrders: Order[] = [
 export const mockUsers: User[] = [
   {
     id: "user-1",
-    name: "John Doe",
-    email: "john@example.com",
+    name: "Elio Aliaj",
+    email: "elioaliaj0@gmail.com",
     points: 120,
     level: "bronze",
     orders: ["order-1"],
@@ -351,8 +351,8 @@ export const mockGiftCards: GiftCard[] = [
     amount: 25,
     balance: 25,
     sender: {
-      name: "John Doe",
-      email: "john@example.com",
+      name: "Elio Aliaj",
+      email: "elioaliaj0@gmail.com",
     },
     recipient: {
       name: "Jane Smith",

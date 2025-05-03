@@ -83,13 +83,13 @@ export default function LoginPage() {
         className="absolute left-4 top-4 md:left-8 md:top-8 flex items-center"
       >
         <Image
-          src="logoja1.svg"
-          alt="Art Coffee"
+          src="../logooo.png"
+          alt="Maison De Café"
           width={32}
           height={32}
           className="mr-2"
         />
-        <span className="font-bold text-xl">Art Coffee</span>
+        <span className="font-bold text-xl">Maison De Café</span>
       </Link>
 
       <Card className="mx-auto max-w-sm">

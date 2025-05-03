@@ -1,48 +1,56 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import Link from "next/link"
-import { CreditCard, Package, Settings, User } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { CreditCard, Package, Settings, User } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useToast } from "@/components/ui/use-toast"
-import { useUser } from "@/components/providers/user-provider"
-import { mockOrders } from "@/lib/data"
-import { formatCurrency, formatDate } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
+import { useUser } from "@/components/providers/user-provider";
+import { mockOrders } from "@/lib/data";
+import { formatCurrency, formatDate } from "@/lib/utils";
 
 export default function AccountPage() {
-  const { user } = useUser()
-  const { toast } = useToast()
-  const [name, setName] = useState(user?.name || "")
-  const [email, setEmail] = useState(user?.email || "")
-  const [isSaving, setIsSaving] = useState(false)
+  const { user } = useUser();
+  const { toast } = useToast();
+  const [name, setName] = useState(user?.name || "");
+  const [email, setEmail] = useState(user?.email || "");
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleSaveProfile = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSaving(true)
+    e.preventDefault();
+    setIsSaving(true);
 
     // Simulate API call
     setTimeout(() => {
       toast({
         title: "Profile Updated",
         description: "Your profile has been updated successfully.",
-      })
-      setIsSaving(false)
-    }, 1000)
-  }
+      });
+      setIsSaving(false);
+    }, 1000);
+  };
 
   return (
     <div className="container px-4 py-8 md:py-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold">Account</h1>
-          <p className="text-muted-foreground">Manage your account settings and preferences.</p>
+          <p className="text-muted-foreground">
+            Manage your account settings and preferences.
+          </p>
         </div>
       </div>
 
@@ -66,24 +74,39 @@ export default function AccountPage() {
           <Card>
             <CardHeader>
               <CardTitle>Profile</CardTitle>
-              <CardDescription>Manage your personal information.</CardDescription>
+              <CardDescription>
+                Manage your personal information.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSaveProfile} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Name</Label>
-                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label>Loyalty Status</Label>
                   <div className="flex items-center gap-2">
                     <div className="h-4 w-4 rounded-full bg-primary" />
-                    <span className="capitalize">{user?.level || "bronze"} Level</span>
-                    <span className="text-muted-foreground">({user?.points || 0} points)</span>
+                    <span className="capitalize">
+                      {user?.level || "bronze"} Level
+                    </span>
+                    <span className="text-muted-foreground">
+                      ({user?.points || 0} points)
+                    </span>
                   </div>
                 </div>
                 <Button type="submit" disabled={isSaving}>
@@ -96,7 +119,9 @@ export default function AccountPage() {
           <Card className="mt-6">
             <CardHeader>
               <CardTitle>Preferences</CardTitle>
-              <CardDescription>Manage your app preferences and notifications.</CardDescription>
+              <CardDescription>
+                Manage your app preferences and notifications.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -123,7 +148,9 @@ export default function AccountPage() {
                     <Label htmlFor="marketing" className="text-base">
                       Order Updates
                     </Label>
-                    <p className="text-sm text-muted-foreground">Receive notifications about your order status.</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive notifications about your order status.
+                    </p>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Button variant="outline" size="sm">
@@ -143,7 +170,9 @@ export default function AccountPage() {
           <Card>
             <CardHeader>
               <CardTitle>Order History</CardTitle>
-              <CardDescription>View your past orders and their status.</CardDescription>
+              <CardDescription>
+                View your past orders and their status.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
@@ -152,25 +181,34 @@ export default function AccountPage() {
                     <CardContent className="p-4">
                       <div className="flex flex-col md:flex-row justify-between">
                         <div>
-                          <p className="font-medium">Order #{order.id.split("-")[1]}</p>
-                          <p className="text-sm text-muted-foreground">{formatDate(order.createdAt)}</p>
+                          <p className="font-medium">
+                            Order #{order.id.split("-")[1]}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {formatDate(order.createdAt)}
+                          </p>
                           <div className="flex items-center gap-2 mt-2">
                             <div
                               className={`h-2 w-2 rounded-full ${
                                 order.status === "completed"
                                   ? "bg-success"
                                   : order.status === "ready"
-                                    ? "bg-primary"
-                                    : "bg-muted"
+                                  ? "bg-primary"
+                                  : "bg-muted"
                               }`}
                             />
-                            <span className="text-sm capitalize">{order.status}</span>
+                            <span className="text-sm capitalize">
+                              {order.status}
+                            </span>
                           </div>
                         </div>
                         <div className="mt-4 md:mt-0 md:text-right">
-                          <p className="font-bold">{formatCurrency(order.total)}</p>
+                          <p className="font-bold">
+                            {formatCurrency(order.total)}
+                          </p>
                           <p className="text-sm text-muted-foreground">
-                            {order.items.length} {order.items.length === 1 ? "item" : "items"}
+                            {order.items.length}{" "}
+                            {order.items.length === 1 ? "item" : "items"}
                           </p>
                           <Button variant="link" className="p-0 h-auto mt-2">
                             View Details
@@ -189,7 +227,9 @@ export default function AccountPage() {
           <Card>
             <CardHeader>
               <CardTitle>Payment Methods</CardTitle>
-              <CardDescription>Manage your payment methods and billing information.</CardDescription>
+              <CardDescription>
+                Manage your payment methods and billing information.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -200,7 +240,9 @@ export default function AccountPage() {
                     </div>
                     <div>
                       <p className="font-medium">•••• •••• •••• 4242</p>
-                      <p className="text-sm text-muted-foreground">Expires 12/25</p>
+                      <p className="text-sm text-muted-foreground">
+                        Expires 12/25
+                      </p>
                     </div>
                   </div>
                   <Button variant="ghost" size="sm">
@@ -218,14 +260,18 @@ export default function AccountPage() {
           <Card className="mt-6">
             <CardHeader>
               <CardTitle>Gift Cards</CardTitle>
-              <CardDescription>Manage your gift cards and check balances.</CardDescription>
+              <CardDescription>
+                Manage your gift cards and check balances.
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div>
                     <p className="font-medium">GIFT123</p>
-                    <p className="text-sm text-muted-foreground">Balance: $25.00</p>
+                    <p className="text-sm text-muted-foreground">
+                      Balance: $25.00
+                    </p>
                   </div>
                   <Button variant="outline" size="sm">
                     Use
@@ -241,5 +287,5 @@ export default function AccountPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

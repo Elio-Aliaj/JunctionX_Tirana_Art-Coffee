@@ -36,7 +36,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 items-center">
               <div className="col-span-2">
                 <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-                  Art Coffee
+                  Maison De Café
                 </h1>
                 <p className="text-xl text-white/90 mb-8">
                   Experience the perfect blend of flavor and artistry at our
@@ -221,7 +221,7 @@ export default function Home() {
               </div>
               <div className="relative h-[300px] rounded-lg overflow-hidden">
                 <Image
-                  src="giftcardd.jpg"
+                  src="giftcardd2.jpg"
                   alt="Gift Card"
                   fill
                   className="object-cover"
@@ -237,7 +237,7 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="font-bold text-lg mb-4">Art Coffee</h3>
+              <h3 className="font-bold text-lg mb-4">Maison De Café</h3>
               <p className="text-muted-foreground">
                 A modern digital café experience with custom ordering, loyalty
                 rewards, and more.
@@ -291,7 +291,9 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-muted-foreground/20 text-center text-muted-foreground">
-            <p>© {new Date().getFullYear()} Art Coffee. All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} Maison De Café. All rights reserved.
+            </p>
           </div>
         </div>
       </footer>

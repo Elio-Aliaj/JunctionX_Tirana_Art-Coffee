@@ -1,35 +1,41 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Check, Gift, LockKeyhole } from "lucide-react"
-import Link from "next/link"
+import { useState } from "react";
+import { Check, Gift, LockKeyhole } from "lucide-react";
+import Link from "next/link";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/components/ui/use-toast"
-import { useAuth } from "@/components/providers/auth-provider"
-import { mockGiftCards } from "@/lib/data"
-import { formatCurrency, formatDate, generateGiftCardCode } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/components/providers/auth-provider";
+import { mockGiftCards } from "@/lib/data";
+import { formatCurrency, formatDate, generateGiftCardCode } from "@/lib/utils";
 
 export default function GiftCardsPage() {
-  const { toast } = useToast()
-  const { user } = useAuth()
-  const [amount, setAmount] = useState(25)
-  const [recipientName, setRecipientName] = useState("")
-  const [recipientEmail, setRecipientEmail] = useState("")
-  const [senderName, setSenderName] = useState("")
-  const [senderEmail, setSenderEmail] = useState("")
-  const [message, setMessage] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast();
+  const { user } = useAuth();
+  const [amount, setAmount] = useState(25);
+  const [recipientName, setRecipientName] = useState("");
+  const [recipientEmail, setRecipientEmail] = useState("");
+  const [senderName, setSenderName] = useState("");
+  const [senderEmail, setSenderEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [giftCardCode, setGiftCardCode] = useState("")
-  const [isCheckingCode, setIsCheckingCode] = useState(false)
+  const [giftCardCode, setGiftCardCode] = useState("");
+  const [isCheckingCode, setIsCheckingCode] = useState(false);
 
   // If user is not logged in, show login prompt
   if (!user) {
@@ -41,11 +47,15 @@ export default function GiftCardsPage() {
               <LockKeyhole className="h-12 w-12 text-muted-foreground" />
             </div>
             <CardTitle className="text-2xl">Login Required</CardTitle>
-            <CardDescription>You need to be logged in to access gift cards and manage your balance.</CardDescription>
+            <CardDescription>
+              You need to be logged in to access gift cards and manage your
+              balance.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-muted-foreground">
-              Send digital gift cards to friends and family, or check your gift card balance.
+              Send digital gift cards to friends and family, or check your gift
+              card balance.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg">
@@ -58,55 +68,60 @@ export default function GiftCardsPage() {
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 
   const handleSendGiftCard = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     // Simulate API call
     setTimeout(() => {
       toast({
         title: "Gift Card Sent!",
-        description: `A gift card for ${formatCurrency(amount)} has been sent to ${recipientEmail}.`,
-      })
+        description: `A gift card for ${formatCurrency(
+          amount
+        )} has been sent to ${recipientEmail}.`,
+      });
 
       // Reset form
-      setAmount(25)
-      setRecipientName("")
-      setRecipientEmail("")
-      setSenderName("")
-      setSenderEmail("")
-      setMessage("")
-      setIsSubmitting(false)
-    }, 1500)
-  }
+      setAmount(25);
+      setRecipientName("");
+      setRecipientEmail("");
+      setSenderName("");
+      setSenderEmail("");
+      setMessage("");
+      setIsSubmitting(false);
+    }, 1500);
+  };
 
   const handleCheckGiftCard = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsCheckingCode(true)
+    e.preventDefault();
+    setIsCheckingCode(true);
 
     // Simulate API call
     setTimeout(() => {
-      const giftCard = mockGiftCards.find((card) => card.code === giftCardCode)
+      const giftCard = mockGiftCards.find((card) => card.code === giftCardCode);
 
       if (giftCard) {
         toast({
           title: "Gift Card Found!",
-          description: `Your gift card has a balance of ${formatCurrency(giftCard.balance)}.`,
-        })
+          description: `Your gift card has a balance of ${formatCurrency(
+            giftCard.balance
+          )}.`,
+        });
       } else {
         toast({
           title: "Gift Card Not Found",
-          description: "The gift card code you entered is invalid. Try GIFT123 or GIFT456.",
+          description:
+            "The gift card code you entered is invalid. Try GIFT123 or GIFT456.",
           variant: "destructive",
-        })
+        });
       }
 
-      setIsCheckingCode(false)
-    }, 1500)
-  }
+      setIsCheckingCode(false);
+    }, 1500);
+  };
 
   return (
     <div className="container px-4 py-8 md:py-12">
@@ -124,7 +139,9 @@ export default function GiftCardsPage() {
               <Card className="mb-6">
                 <CardHeader>
                   <CardTitle>Send a Gift Card</CardTitle>
-                  <CardDescription>Send a digital gift card to a friend or loved one.</CardDescription>
+                  <CardDescription>
+                    Send a digital gift card to a friend or loved one.
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSendGiftCard} className="space-y-4">
@@ -188,11 +205,22 @@ export default function GiftCardsPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message">Personal Message (Optional)</Label>
-                      <Textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} rows={3} />
+                      <Label htmlFor="message">
+                        Personal Message (Optional)
+                      </Label>
+                      <Textarea
+                        id="message"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        rows={3}
+                      />
                     </div>
 
-                    <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={isSubmitting}
+                    >
                       {isSubmitting ? "Sending..." : "Send Gift Card"}
                     </Button>
                   </form>
@@ -209,8 +237,12 @@ export default function GiftCardsPage() {
                 </div>
                 <CardContent className="p-6">
                   <div className="mb-4">
-                    <h3 className="text-lg font-semibold">Art Coffee Gift Card</h3>
-                    <p className="text-muted-foreground">A perfect gift for coffee lovers</p>
+                    <h3 className="text-lg font-semibold">
+                      Maison De Café Gift Card
+                    </h3>
+                    <p className="text-muted-foreground">
+                      A perfect gift for coffee lovers
+                    </p>
                   </div>
                   <div className="flex justify-between items-center">
                     <div>
@@ -219,14 +251,22 @@ export default function GiftCardsPage() {
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Code</p>
-                      <p className="text-sm font-mono">{generateGiftCardCode()}</p>
+                      <p className="text-sm font-mono">
+                        {generateGiftCardCode()}
+                      </p>
                     </div>
                   </div>
                   {recipientName && (
                     <div className="mt-4 pt-4 border-t border-border">
-                      <p className="text-sm text-muted-foreground">To: {recipientName}</p>
+                      <p className="text-sm text-muted-foreground">
+                        To: {recipientName}
+                      </p>
                       {message && <p className="mt-2 italic">"{message}"</p>}
-                      {senderName && <p className="text-sm text-muted-foreground mt-2">From: {senderName}</p>}
+                      {senderName && (
+                        <p className="text-sm text-muted-foreground mt-2">
+                          From: {senderName}
+                        </p>
+                      )}
                     </div>
                   )}
                 </CardContent>
@@ -261,7 +301,9 @@ export default function GiftCardsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Check Gift Card Balance</CardTitle>
-                <CardDescription>Enter your gift card code to check the remaining balance.</CardDescription>
+                <CardDescription>
+                  Enter your gift card code to check the remaining balance.
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleCheckGiftCard} className="space-y-4">
@@ -270,14 +312,22 @@ export default function GiftCardsPage() {
                     <Input
                       id="giftCardCode"
                       value={giftCardCode}
-                      onChange={(e) => setGiftCardCode(e.target.value.toUpperCase())}
+                      onChange={(e) =>
+                        setGiftCardCode(e.target.value.toUpperCase())
+                      }
                       placeholder="e.g., GIFT123"
                       required
                     />
-                    <p className="text-xs text-muted-foreground">For demo, try: GIFT123 or GIFT456</p>
+                    <p className="text-xs text-muted-foreground">
+                      For demo, try: GIFT123 or GIFT456
+                    </p>
                   </div>
 
-                  <Button type="submit" className="w-full" disabled={isCheckingCode}>
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isCheckingCode}
+                  >
                     {isCheckingCode ? "Checking..." : "Check Balance"}
                   </Button>
                 </form>
@@ -293,11 +343,17 @@ export default function GiftCardsPage() {
                     <div className="flex justify-between items-center">
                       <div>
                         <p className="font-medium">{card.code}</p>
-                        <p className="text-sm text-muted-foreground">Issued: {formatDate(card.createdAt)}</p>
+                        <p className="text-sm text-muted-foreground">
+                          Issued: {formatDate(card.createdAt)}
+                        </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold">{formatCurrency(card.balance)}</p>
-                        <p className="text-sm text-muted-foreground">of {formatCurrency(card.amount)}</p>
+                        <p className="font-bold">
+                          {formatCurrency(card.balance)}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          of {formatCurrency(card.amount)}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
@@ -308,5 +364,5 @@ export default function GiftCardsPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

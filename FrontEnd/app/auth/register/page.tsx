@@ -95,7 +95,7 @@ export default function RegisterPage() {
   return (
     <div className="container flex min-h-screen w-screen flex-col items-center justify-center py-8">
       <Link href="/" className="absolute left-4 top-4 md:left-8 md:top-8 flex items-center">
-        <Image src="/images/logo.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+        <Image src="logoja1.svg" alt="Art Coffee" width={32} height={32} className="mr-2" />
         <span className="font-bold text-xl">Art Coffee</span>
       </Link>
 

@@ -106,7 +106,9 @@ export function MainNav() {
           <SheetContent side="left" className="w-[300px] sm:w-[400px]">
             <div className="flex items-center justify-between">
               <Link href="/" className="flex items-center" onClick={() => setOpen(false)}>
-                <Image src="/images/logo.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+              <Image src="logoERe1.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+
+
                 <span className="font-bold text-xl">Art Coffee</span>
               </Link>
               <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
@@ -133,7 +135,10 @@ export function MainNav() {
           </SheetContent>
         </Sheet>
         <Link href="/" className="flex items-center">
-          <Image src="/images/logo.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+          
+        <Image src="logooo.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+
+
           <span className="font-bold text-xl">Art Coffee</span>
         </Link>
         <nav className="ml-auto flex items-center space-x-6">

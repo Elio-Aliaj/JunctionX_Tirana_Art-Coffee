@@ -190,7 +190,12 @@ export default function Home() {
                 </Button>
               </div>
               <div className="relative h-[300px] rounded-lg overflow-hidden">
-                <Image src="/images/gift-card.png" alt="Gift Card" fill className="object-cover" />
+                <Image
+                  src="giftcardd.jpg"
+                  alt="Gift Card"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>

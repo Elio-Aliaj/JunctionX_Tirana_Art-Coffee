@@ -389,28 +389,28 @@ export const mockRewards: Reward[] = [
     name: "Free Coffee",
     description: "Any small coffee of your choice",
     pointsCost: 100,
-    image: "/images/coffee-1.png",
+    image: "freec.jpg",
   },
   {
     id: "reward-2",
     name: "Free Pastry",
     description: "Any pastry of your choice",
     pointsCost: 150,
-    image: "/images/pastry-1.png",
+    image: "freep.jpg",
   },
   {
     id: "reward-3",
     name: "10% Off Order",
     description: "10% discount on your next order",
     pointsCost: 200,
-    image: "/images/cafe-interior.png",
+    image: "discount.jpg",
   },
   {
     id: "reward-4",
     name: "Free Large Specialty Drink",
     description: "Any large specialty drink of your choice",
     pointsCost: 300,
-    image: "/images/coffee-3.png",
+    image: "freed1.jpg",
   },
 ]
 

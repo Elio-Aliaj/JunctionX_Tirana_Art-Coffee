@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react"
+import { ChevronLeft, CreditCard, Gift, Minus, Plus, ShoppingBag, Trash2, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,14 +12,69 @@ import { Separator } from "@/components/ui/separator"
 import { useToast } from "@/components/ui/use-toast"
 import { useCart } from "@/components/providers/cart-provider"
 import { useUser } from "@/components/providers/user-provider"
+import { useAuth } from "@/components/providers/auth-provider"
 import { formatCurrency, generateOrderId } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
+import { mockGiftCards } from "@/lib/data"
 
 export default function CartPage() {
   const router = useRouter()
   const { toast } = useToast()
   const { items, removeItem, updateItemQuantity, clearCart, subtotal } = useCart()
   const { user, addPoints } = useUser()
+  const { user: authUser, isLoading: isAuthLoading } = useAuth()
   const [isProcessing, setIsProcessing] = useState(false)
+  const [isGuestCheckout, setIsGuestCheckout] = useState(false)
+
+  // Gift card states
+  const [useGiftCard, setUseGiftCard] = useState(false)
+  const [giftCardCode, setGiftCardCode] = useState("")
+  const [giftCardApplied, setGiftCardApplied] = useState(false)
+  const [appliedGiftCard, setAppliedGiftCard] = useState<{ code: string; balance: number } | null>(null)
+  const [giftCardAmount, setGiftCardAmount] = useState(0)
+
+  // Tax calculation
+  const taxRate = 0.08
+  const taxAmount = subtotal * taxRate
+  const totalBeforeGiftCard = subtotal + taxAmount
+  const totalAfterGiftCard = Math.max(0, totalBeforeGiftCard - giftCardAmount)
+
+  const handleApplyGiftCard = () => {
+    // Find gift card in mock data
+    const giftCard = mockGiftCards.find((card) => card.code === giftCardCode)
+
+    if (giftCard) {
+      // Calculate how much of the gift card to use
+      const amountToUse = Math.min(giftCard.balance, totalBeforeGiftCard)
+
+      setAppliedGiftCard({
+        code: giftCard.code,
+        balance: giftCard.balance,
+      })
+      setGiftCardAmount(amountToUse)
+      setGiftCardApplied(true)
+
+      toast({
+        title: "Gift Card Applied",
+        description: `Applied ${formatCurrency(amountToUse)} from gift card ${giftCard.code}.`,
+      })
+    } else {
+      toast({
+        title: "Invalid Gift Card",
+        description: "The gift card code you entered is invalid. Try GIFT123 or GIFT456.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const handleRemoveGiftCard = () => {
+    setGiftCardApplied(false)
+    setAppliedGiftCard(null)
+    setGiftCardAmount(0)
+    setGiftCardCode("")
+  }
 
   const handleCheckout = () => {
     if (items.length === 0) return
@@ -28,8 +83,8 @@ export default function CartPage() {
 
     // Simulate processing
     setTimeout(() => {
-      // Calculate points (1 point per dollar spent)
-      const pointsEarned = Math.floor(subtotal)
+      // Calculate points (1 point per dollar spent) - only for logged in users
+      const pointsEarned = Math.floor(totalAfterGiftCard)
 
       if (user) {
         addPoints(pointsEarned)
@@ -45,7 +100,7 @@ export default function CartPage() {
         description: `Your order #${orderId.split("-")[1]} has been placed successfully.`,
       })
 
-      router.push(`/order-confirmation?orderId=${orderId}&points=${pointsEarned}`)
+      router.push(`/order-confirmation?orderId=${orderId}&points=${user ? pointsEarned : 0}`)
     }, 2000)
   }
 
@@ -157,26 +212,117 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between">
                   <span>Tax</span>
-                  <span>{formatCurrency(subtotal * 0.08)}</span>
+                  <span>{formatCurrency(taxAmount)}</span>
                 </div>
+
+                {/* Gift Card Section */}
+                {authUser && (
+                  <div className="mt-4 pt-4 border-t">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <Gift className="h-4 w-4 text-muted-foreground" />
+                        <Label htmlFor="use-gift-card" className="text-sm font-medium">
+                          Use Gift Card
+                        </Label>
+                      </div>
+                      <Switch id="use-gift-card" checked={useGiftCard} onCheckedChange={setUseGiftCard} />
+                    </div>
+
+                    {useGiftCard && !giftCardApplied && (
+                      <div className="mt-2 space-y-2">
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Gift card code"
+                            value={giftCardCode}
+                            onChange={(e) => setGiftCardCode(e.target.value.toUpperCase())}
+                            className="flex-1"
+                          />
+                          <Button onClick={handleApplyGiftCard} size="sm">
+                            Apply
+                          </Button>
+                        </div>
+                        <p className="text-xs text-muted-foreground">For demo, try: GIFT123 or GIFT456</p>
+                      </div>
+                    )}
+
+                    {giftCardApplied && appliedGiftCard && (
+                      <div className="mt-2 p-2 bg-muted/50 rounded-md">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="text-sm font-medium">{appliedGiftCard.code}</p>
+                            <p className="text-xs text-muted-foreground">
+                              Balance: {formatCurrency(appliedGiftCard.balance - giftCardAmount)} remaining
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium">-{formatCurrency(giftCardAmount)}</span>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={handleRemoveGiftCard}>
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </CardContent>
             <Separator />
             <CardFooter className="flex justify-between pt-4">
               <span className="font-bold">Total</span>
-              <span className="font-bold">{formatCurrency(subtotal * 1.08)}</span>
+              <div className="text-right">
+                {giftCardApplied && giftCardAmount > 0 && (
+                  <p className="text-sm text-muted-foreground line-through mb-1">
+                    {formatCurrency(totalBeforeGiftCard)}
+                  </p>
+                )}
+                <span className="font-bold">{formatCurrency(totalAfterGiftCard)}</span>
+              </div>
             </CardFooter>
           </Card>
 
-          <Button className="w-full mt-4" size="lg" onClick={handleCheckout} disabled={isProcessing}>
-            {isProcessing ? "Processing..." : "Checkout"}
-          </Button>
+          {!isAuthLoading && (
+            <>
+              {!authUser && !isGuestCheckout ? (
+                <div className="mt-4 space-y-4">
+                  <Button asChild className="w-full" variant="outline">
+                    <Link href="/auth/login">
+                      <User className="mr-2 h-4 w-4" />
+                      Login to Checkout
+                    </Link>
+                  </Button>
+                  <Button className="w-full" onClick={() => setIsGuestCheckout(true)}>
+                    Continue as Guest
+                  </Button>
+                </div>
+              ) : (
+                <Button className="w-full mt-4" size="lg" onClick={handleCheckout} disabled={isProcessing}>
+                  {isProcessing ? "Processing..." : "Checkout"}
+                </Button>
+              )}
+            </>
+          )}
 
-          {user && (
+          {authUser && (
             <p className="text-sm text-muted-foreground mt-2 text-center">
-              You'll earn approximately {Math.floor(subtotal)} points with this order.
+              You'll earn approximately {Math.floor(totalAfterGiftCard)} points with this order.
             </p>
           )}
+
+          {isGuestCheckout && (
+            <p className="text-sm text-muted-foreground mt-2 text-center">
+              Checking out as guest.{" "}
+              <Link href="/auth/login" className="text-primary hover:underline">
+                Login
+              </Link>{" "}
+              to earn loyalty points.
+            </p>
+          )}
+
+          <div className="mt-4 flex items-center justify-center gap-2">
+            <CreditCard className="h-4 w-4 text-muted-foreground" />
+            <p className="text-xs text-muted-foreground">Secure payment processing</p>
+          </div>
         </div>
       </div>
     </div>

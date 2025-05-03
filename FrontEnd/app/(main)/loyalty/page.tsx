@@ -1,6 +1,8 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
+import { LockKeyhole } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,12 +10,44 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Progress } from "@/components/ui/progress"
 import { useToast } from "@/components/ui/use-toast"
 import { useUser } from "@/components/providers/user-provider"
+import { useAuth } from "@/components/providers/auth-provider"
 import { mockRewards, loyaltyLevels } from "@/lib/data"
 import { formatDate } from "@/lib/utils"
 
 export default function LoyaltyPage() {
   const { user } = useUser()
+  const { user: authUser } = useAuth()
   const { toast } = useToast()
+
+  // If user is not logged in, show login prompt
+  if (!authUser) {
+    return (
+      <div className="container px-4 py-12 md:py-16 max-w-md mx-auto">
+        <Card className="text-center">
+          <CardHeader>
+            <div className="mx-auto mb-4 bg-muted p-3 rounded-full">
+              <LockKeyhole className="h-12 w-12 text-muted-foreground" />
+            </div>
+            <CardTitle className="text-2xl">Login Required</CardTitle>
+            <CardDescription>You need to be logged in to access the loyalty program and earn rewards.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-muted-foreground">
+              Join our loyalty program to earn points with every purchase and unlock exclusive rewards.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button asChild size="lg">
+                <Link href="/auth/login">Login</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="/auth/register">Create Account</Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
 
   // Find the user's current level and next level
   const currentLevel = loyaltyLevels.find((level) => level.name === user?.level) || loyaltyLevels[0]

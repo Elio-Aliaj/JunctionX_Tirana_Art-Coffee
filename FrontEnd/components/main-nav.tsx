@@ -3,7 +3,8 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Coffee, Gift, Home, Menu, ShoppingBag, Star, User, X } from "lucide-react"
+import { Coffee, Gift, Home, Menu, ShieldCheck, ShoppingBag, Star, User, X } from "lucide-react"
+import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -17,7 +18,8 @@ export function MainNav() {
   const { user, isAdmin, logout } = useAuth()
   const [open, setOpen] = useState(false)
 
-  const routes = [
+  // Base routes that are always shown
+  const baseRoutes = [
     {
       href: "/",
       label: "Home",
@@ -42,26 +44,34 @@ export function MainNav() {
       icon: Gift,
       active: pathname === "/gift-cards",
     },
-    {
-      href: "/account",
-      label: "Account",
-      icon: User,
-      active: pathname === "/account",
-    },
   ]
 
-  // Add admin route if user is admin
-  const allRoutes = isAdmin
+  // Account route - only shown when user is logged in
+  const accountRoute = user
     ? [
-        ...routes,
+        {
+          href: "/account",
+          label: "Account",
+          icon: User,
+          active: pathname === "/account",
+        },
+      ]
+    : []
+
+  // Admin route - only shown when user is admin
+  const adminRoute = isAdmin
+    ? [
         {
           href: "/admin",
           label: "Admin",
-          icon: User,
+          icon: ShieldCheck,
           active: pathname.startsWith("/admin"),
         },
       ]
-    : routes
+    : []
+
+  // Combine all applicable routes
+  const allRoutes = [...baseRoutes, ...accountRoute, ...adminRoute]
 
   return (
     <>
@@ -96,8 +106,8 @@ export function MainNav() {
           <SheetContent side="left" className="w-[300px] sm:w-[400px]">
             <div className="flex items-center justify-between">
               <Link href="/" className="flex items-center" onClick={() => setOpen(false)}>
-                <Coffee className="h-6 w-6 text-primary mr-2" />
-                <span className="font-bold text-xl">Brew Haven</span>
+                <Image src="/images/logo.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+                <span className="font-bold text-xl">Art Coffee</span>
               </Link>
               <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
                 <X className="h-5 w-5" />
@@ -123,8 +133,8 @@ export function MainNav() {
           </SheetContent>
         </Sheet>
         <Link href="/" className="flex items-center">
-          <Coffee className="h-6 w-6 text-primary mr-2" />
-          <span className="font-bold text-xl">Brew Haven</span>
+          <Image src="/images/logo.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+          <span className="font-bold text-xl">Art Coffee</span>
         </Link>
         <nav className="ml-auto flex items-center space-x-6">
           {allRoutes.map((route) => (

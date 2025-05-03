@@ -17,8 +17,8 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "Brew Haven | Digital Café",
-  description: "A modern digital café experience",
+  title: "Art Coffee | Digital Café",
+  description: "A modern digital café experience with artisanal coffee",
     generator: 'v0.dev'
 }
 

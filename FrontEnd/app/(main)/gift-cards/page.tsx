@@ -3,7 +3,8 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Check, Gift } from "lucide-react"
+import { Check, Gift, LockKeyhole } from "lucide-react"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,11 +13,13 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
+import { useAuth } from "@/components/providers/auth-provider"
 import { mockGiftCards } from "@/lib/data"
 import { formatCurrency, formatDate, generateGiftCardCode } from "@/lib/utils"
 
 export default function GiftCardsPage() {
   const { toast } = useToast()
+  const { user } = useAuth()
   const [amount, setAmount] = useState(25)
   const [recipientName, setRecipientName] = useState("")
   const [recipientEmail, setRecipientEmail] = useState("")
@@ -27,6 +30,36 @@ export default function GiftCardsPage() {
 
   const [giftCardCode, setGiftCardCode] = useState("")
   const [isCheckingCode, setIsCheckingCode] = useState(false)
+
+  // If user is not logged in, show login prompt
+  if (!user) {
+    return (
+      <div className="container px-4 py-12 md:py-16 max-w-md mx-auto">
+        <Card className="text-center">
+          <CardHeader>
+            <div className="mx-auto mb-4 bg-muted p-3 rounded-full">
+              <LockKeyhole className="h-12 w-12 text-muted-foreground" />
+            </div>
+            <CardTitle className="text-2xl">Login Required</CardTitle>
+            <CardDescription>You need to be logged in to access gift cards and manage your balance.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-muted-foreground">
+              Send digital gift cards to friends and family, or check your gift card balance.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button asChild size="lg">
+                <Link href="/auth/login">Login</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="/auth/register">Create Account</Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
 
   const handleSendGiftCard = (e: React.FormEvent) => {
     e.preventDefault()
@@ -176,7 +209,7 @@ export default function GiftCardsPage() {
                 </div>
                 <CardContent className="p-6">
                   <div className="mb-4">
-                    <h3 className="text-lg font-semibold">Brew Haven Gift Card</h3>
+                    <h3 className="text-lg font-semibold">Art Coffee Gift Card</h3>
                     <p className="text-muted-foreground">A perfect gift for coffee lovers</p>
                   </div>
                   <div className="flex justify-between items-center">

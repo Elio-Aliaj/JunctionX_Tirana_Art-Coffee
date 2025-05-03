@@ -5,7 +5,8 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Coffee, Github, Loader2 } from "lucide-react"
+import { Github, Loader2 } from "lucide-react"
+import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -71,8 +72,8 @@ export default function LoginPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <Link href="/" className="absolute left-4 top-4 md:left-8 md:top-8 flex items-center">
-        <Coffee className="h-6 w-6 text-primary mr-2" />
-        <span className="font-bold text-xl">Brew Haven</span>
+        <Image src="/images/logo.png" alt="Art Coffee" width={32} height={32} className="mr-2" />
+        <span className="font-bold text-xl">Art Coffee</span>
       </Link>
 
       <Card className="mx-auto max-w-sm">

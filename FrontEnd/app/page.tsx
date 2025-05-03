@@ -4,6 +4,8 @@ import { Coffee, Gift, QrCode, Star } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { products } from "@/lib/data"
 
 export default function Home() {
@@ -15,31 +17,59 @@ export default function Home() {
         {/* Hero Section */}
         <section className="relative h-[500px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 z-10" />
-          <Image
-            src="/placeholder.svg?height=500&width=1200"
-            alt="Coffee shop"
-            fill
-            className="object-cover"
-            priority
-          />
+          <Image src="/images/hero-coffee.png" alt="Coffee shop" fill className="object-cover" priority />
           <div className="container relative z-20 px-4 md:px-6">
-            <div className="max-w-2xl">
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Brew Haven</h1>
-              <p className="text-xl text-white/90 mb-8">
-                Experience the perfect blend of flavor and atmosphere at our digital café.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="font-medium">
-                  <Link href="/menu">Order Now</Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-medium"
-                >
-                  <Link href="/loyalty">Join Loyalty Program</Link>
-                </Button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div>
+                <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Art Coffee</h1>
+                <p className="text-xl text-white/90 mb-8">
+                  Experience the perfect blend of flavor and artistry at our digital café.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button asChild size="lg" className="font-medium">
+                    <Link href="/menu">Order Now</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="bg-white/10 text-white border-white/20 hover:bg-white/20 font-medium"
+                  >
+                    <Link href="/loyalty">Join Loyalty Program</Link>
+                  </Button>
+                </div>
+              </div>
+              <div className="hidden md:block">
+                <Card className="bg-card/95 backdrop-blur">
+                  <CardHeader>
+                    <CardTitle>Quick Login</CardTitle>
+                    <CardDescription>Access your account to view orders and earn rewards</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <form className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="email" className="text-foreground">
+                          Email
+                        </Label>
+                        <Input id="email" type="email" placeholder="your@email.com" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="password" className="text-foreground">
+                          Password
+                        </Label>
+                        <Input id="password" type="password" />
+                      </div>
+                      <div className="flex flex-col space-y-2">
+                        <Button asChild>
+                          <Link href="/auth/login">Login</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                          <Link href="/auth/register">Create Account</Link>
+                        </Button>
+                      </div>
+                    </form>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
@@ -87,6 +117,28 @@ export default function Home() {
                 </CardContent>
               </Card>
             </div>
+          </div>
+        </section>
+
+        {/* Mobile Login Section (only visible on mobile) */}
+        <section className="py-8 md:hidden">
+          <div className="container px-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Login to Your Account</CardTitle>
+                <CardDescription>Access your orders and earn rewards</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col space-y-3">
+                  <Button asChild size="lg">
+                    <Link href="/auth/login">Login</Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg">
+                    <Link href="/auth/register">Create Account</Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
@@ -138,7 +190,7 @@ export default function Home() {
                 </Button>
               </div>
               <div className="relative h-[300px] rounded-lg overflow-hidden">
-                <Image src="/placeholder.svg?height=300&width=500" alt="Gift Card" fill className="object-cover" />
+                <Image src="/images/gift-card.png" alt="Gift Card" fill className="object-cover" />
               </div>
             </div>
           </div>
@@ -150,7 +202,7 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="font-bold text-lg mb-4">Brew Haven</h3>
+              <h3 className="font-bold text-lg mb-4">Art Coffee</h3>
               <p className="text-muted-foreground">
                 A modern digital café experience with custom ordering, loyalty rewards, and more.
               </p>
@@ -183,15 +235,15 @@ export default function Home() {
             <div>
               <h3 className="font-bold text-lg mb-4">Contact Us</h3>
               <address className="not-italic text-muted-foreground">
-                <p>123 Coffee Street</p>
-                <p>Brew City, BC 12345</p>
-                <p className="mt-2">Email: info@brewhaven.com</p>
+                <p>123 Art Street</p>
+                <p>Coffee City, AC 12345</p>
+                <p className="mt-2">Email: info@artcoffee.com</p>
                 <p>Phone: (123) 456-7890</p>
               </address>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-muted-foreground/20 text-center text-muted-foreground">
-            <p>© {new Date().getFullYear()} Brew Haven. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Art Coffee. All rights reserved.</p>
           </div>
         </div>
       </footer>

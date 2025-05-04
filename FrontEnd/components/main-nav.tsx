@@ -162,7 +162,7 @@ export function MainNav() {
         </Sheet>
         <Link href="/" className="flex items-center">
           <Image
-            src="logooo.png"
+            src="../logooo.png"
             alt="Maison De Café"
             width={32}
             height={32}
